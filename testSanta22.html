@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        var idx=0
+        $('.slide li').eq(idx).addClass('on').fadeIn()
+
+        $('.buttonList button').click(function(){
+            idx = $(this).index()
+            $('.slide li').eq(idx).addClass('on').fadeIn()
+            .siblings().removeClass('on').fadeOut()
+
+            $('.buttonList button').eq(idx).addClass('on')
+            .siblings().removeClass('on')
+
+        })
+
+        var inter = setInterval(function () {
+            idx = $('.slide li.on').index()
+            $('.slide li').eq(idx).removeClass('on').fadeOut()
+            .next().addClass('on').fadeIn()
+
+            idx++
+
+            if(idx == $('.slide li').length){
+                idx=0
+                $('.slide li').eq(idx).addClass('on').fadeIn()
+            }
+
+        }, 500);
+
+        $('.slide ul').hover(function(){
+            clearInterval(inter)
+        },
+        function(){
+            inter = setInterval(function () {
+                idx = $('.slide li.on').index()
+                $('.slide li').eq(idx).removeClass('on').fadeOut()
+                .next().addClass('on').fadeIn()
+
+                idx++
+
+                if(idx == $('.slide li').length){
+                    idx=0
+                    $('.slide li').eq(idx).addClass('on').fadeIn()
+                }
+
+            }, 500);
+        }
+    )
+
+
+
+    })//도큐먼트레디
+
+
+    </script>
+    <style>
+    *{margin:0; padding:0;}
+    ul{list-style: none;}
+    body,html{height:100%}
+
+    .slide{ height:100%; position:relative}
+    .slide ul{ height:430px; overflow:hidden;}
+    .slide li {position:absolute; display:none; left:0 top:0; text-align:center; width:100%}
+    /*.slide li:first-child{display:block;}*/
+    /*랜덤으로 해야하기 때문에 이걸 쓰면 첫번째사진이 무조건 뜨기 때문에 비활성화시킨다.*/
+
+    .slide ul li img{height:100%}
+    .buttonList{text-align: center}
+    .buttonList .on{background-color:red}
+    </style>
+</head>
+<body>
+    <div class="slide">
+
+        <ul>
+            <li><img src="images/add_img01.jpg" alt=""></li>
+            <li><img src="images/add_img02.jpg" alt=""></li>
+            <li><img src="images/add_img03.jpg" alt=""></li>
+        </ul>
+
+        <div class="buttonList">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+        </div>
+    </div>
+</body>
+</html>
